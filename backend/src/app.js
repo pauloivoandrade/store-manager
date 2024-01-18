@@ -1,16 +1,21 @@
 const express = require('express');
 const connection = require('./models/connection');
-const { productsRoutes } = require('./routes/products.routes');
+// const { productsRoutes } = require('./routes/products.routes');
 
 const app = express();
 
 app.use(express.json());
 
-app.use('/products', productsRoutes);
+app.get('/products', async (_req, res) => {
+  const [products] = await connection.execute('SELECT * FROM products');
+  res.status(200).json(products);
+});
 
-app.get('/sales', async (_req, res) => {
-  const [sales] = await connection.execute('SELECT * FROM sales');
-  res.status(200).json(sales);
+app.get('/products/:id', async (_req, res) => {
+  const { id } = _req.params;
+  const [products] = await connection.execute('SELECT * FROM products WHERE id = ?', [id]);
+  if (!products) return res.status(404).json({ message: 'Product not found' });
+  res.status(200).json(products);
 });
 
 // não remova esse endpoint, é para o avaliador funcionar
