@@ -42,6 +42,23 @@ app.use('/sales', salesRoutes);
 //   res.status(200).json(sales);
 // });
 
+// app.post('/products', async (req, res) => {
+//   const { name } = req.body;
+
+//   if (!name) {
+//     return res.status(400).json({ message: '"name" is required' });
+//   }
+//   if (name.length < 5) {
+//     return res.status(422).json({ message: '"name" length must be at least 5 characters long' });
+//   }
+
+//   const [result] = await connection.execute('INSERT INTO products (name) VALUES (?)', [name]);
+
+//   const newProductId = result.insertId;
+//   const newProduct = { id: newProductId, name };
+
+//   res.status(201).json(newProduct);
+// });
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.json({ status: 'Store Manager UP!' });

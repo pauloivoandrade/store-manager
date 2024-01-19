@@ -20,7 +20,13 @@ const productsByIdMock = [
   },
 ];
 
+const newProductMock = {
+  id: 4,
+  name: 'ProdutoX',
+};
+
 module.exports = {
   allProductsMock,
   productsByIdMock,
+  newProductMock,
 };
