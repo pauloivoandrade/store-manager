@@ -13,10 +13,12 @@ const allProductsMock = [
   },
 ];
 
-const productsByIdMock = {
-  id: 2,
-  name: 'Traje de encolhimento',
-};
+const productsByIdMock = [
+  {
+    id: 2,
+    name: 'Traje de encolhimento',
+  },
+];
 
 module.exports = {
   allProductsMock,

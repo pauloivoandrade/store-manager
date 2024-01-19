@@ -11,8 +11,8 @@ describe('Realizando testes - PRODUCT MODEL:', function () {
     const inputData = 2;
     const product = await productModel.productsById(inputData);
   
-    expect(product).to.be.an('object');
-    expect(product).to.be.equal(productsByIdMock);
+    expect(product).to.be.an('array');
+    expect(product).to.be.deep.equal(productsByIdMock);
   });
 
   it('Buscando todos os produtos com sucesso', async function () {
