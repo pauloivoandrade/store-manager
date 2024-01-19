@@ -2,30 +2,17 @@ const connection = require('./connection');
 
 const allSales = async () => {
   const [sales] = await connection.execute(`
-    SELECT 
-      sales.saleId,
-      sales.date,
-      sales_products.productId,
-      sales_products.quantity
-    FROM sales
-    INNER JOIN sales_products ON sales.saleId = sales_products.saleId
-    ORDER BY sales.saleId ASC, sales_products.productId ASC
-  `);
+  Select b.sale_id, a.date, b.product_id, b.quantity
+  FROM StoreManager.sales AS a
+  INNER JOIN StoreManager.sales_products AS b on a.id = b.sale_id;`);
   return sales;
 };
 
 const salesById = async (id) => {
-  const [sales] = await connection.execute(`
-    SELECT 
-      sales.saleId,
-      sales.date,
-      sales_products.productId,
-      sales_products.quantity
-    FROM sales
-    INNER JOIN sales_products ON sales.saleId = sales_products.saleId
-    WHERE sales.saleId = ?
-    ORDER BY sales.saleId ASC, sales_products.productId ASC
-  `, [id]);
+  const [sales] = await connection.execute(`SELECT
+  date, product_id AS productId, quantity
+  FROM StoreManager.sales AS a
+  INNER JOIN StoreManager.sales_products AS b on a.id = sale_id WHERE id = ?`, [id]);
   return sales;
 };
 

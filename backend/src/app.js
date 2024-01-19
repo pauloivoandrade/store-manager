@@ -21,14 +21,24 @@ app.use('/products', productsRoutes);
 // });
 
 app.get('/sales', async (_req, res) => {
-  const [sales] = await connection.execute('SELECT * FROM sales');
+  const [sales] = await connection.execute(
+    `SELECT sale_id AS saleId, a.date, product_id AS productId, quantity
+    FROM StoreManager.sales AS a
+    INNER JOIN StoreManager.sales_products AS b on a.id = sale_id;`,
+  );
   res.status(200).json(sales);
 });
 
 app.get('/sales/:id', async (_req, res) => {
   const { id } = _req.params;
-  const [sales] = await connection.execute('SELECT * FROM sales WHERE ID = ?', [id]);
-  if (!sales) return res.status(404).json({ message: 'Sale not found' });
+  const [sales] = await connection.execute(`SELECT
+  date, product_id AS productId, quantity
+  FROM StoreManager.sales AS a
+  INNER JOIN StoreManager.sales_products AS b on a.id = sale_id WHERE id = ?`, [id]);
+  if (sales.length === 0) {
+    return res.status(404).json({ message: 'Sale not found' });
+  }
+
   res.status(200).json(sales);
 });
 
