@@ -30,4 +30,16 @@ describe('Testa a camada Products Service', function () {
       expect(response.data).to.be.deep.equal(expected);
     });
   }); 
+  describe('Testa camada Products Service para inserir um novo produtos', function () {
+    it('Adiciona um produto', async function () {
+      const body = 'Abóbora';
+      const expected = { id: 10, name: 'Abóbora' };
+      sinon.stub(productModel, 'addNewProduct').resolves(expected);
+  
+      const response = await productsService.isNewProduct(body);
+  
+      // Ajuste o objeto de resposta esperado para refletir o formato real do retorno
+      expect(response).to.be.deep.equal({ status: 201, data: expected });
+    });
+  });
 });

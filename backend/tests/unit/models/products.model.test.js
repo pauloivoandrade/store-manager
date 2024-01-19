@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const connection = require('../../../src/models/connection');
 const { productModel } = require('../../../src/models');
-const { allProductsMock, productsByIdMock, newProductMock, emptyProduct } = require('../mocks/products.mock');
+const { allProductsMock, productsByIdMock } = require('../mocks/products.mock');
 
 describe('Realizando testes - PRODUCT MODEL:', function () {
   it('Buscando produto por id com sucesso', async function () {
@@ -23,9 +23,8 @@ describe('Realizando testes - PRODUCT MODEL:', function () {
     expect(product).to.be.an('array');
     expect(product).to.be.deep.equal(allProductsMock);
   });
-  describe('Testa a camada Products Model para a função "insert"', function () {
-    it('Faz a inserção de um novo produto', async function () {
-      const expected = { insertId: 100 };
+  describe('Testando a camada Products Model para na função "insert"', function () {
+    it('Insere um novo produto', async function () {
       const product = 'Abóbora';
       sinon.stub(connection, 'execute').resolves([{ insertId: 100 }]);
   
@@ -38,20 +37,6 @@ describe('Realizando testes - PRODUCT MODEL:', function () {
       });
     });
   });
-  
-  // it('Adicionando produto vazio sem sucesso', async function () {
-  //   sinon.stub(connection, 'execute').resolves([]);
-  
-  //   try {
-  //     await productModel.addNewProduct(emptyProduct);
-  //     // Se a execução atingir este ponto, não ocorreu um erro, então falhe o teste
-  //     expect.fail('A exceção esperada não foi lançada.');
-  //   } catch (error) {
-  //     // Verifique se o erro possui a estrutura esperada
-  //     expect(error.status).to.equal(400);
-  //     expect(error.data).to.deep.equal({ message: '"name" is required' });
-  //   }
-  // });  
   
   afterEach(function () {
     sinon.restore();
