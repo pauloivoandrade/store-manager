@@ -21,12 +21,14 @@ const productsByIdMock = [
 ];
 
 const newProductMock = {
-  id: 4,
+  id: 1,
   name: 'ProdutoX',
 };
+const emptyProduct = {};
 
 module.exports = {
   allProductsMock,
   productsByIdMock,
   newProductMock,
+  emptyProduct,
 };
