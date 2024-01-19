@@ -1,6 +1,6 @@
 const express = require('express');
 const { productsRoutes, salesRoutes } = require('./routes');
-const connection = require('./models/connection');
+// const connection = require('./models/connection');
 
 const app = express();
 
