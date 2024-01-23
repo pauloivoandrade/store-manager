@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const productsModels = require('../../../src/models/product.Model');
-const salesModels = require('../../../src/models/sales.Model');
+// const salesModels = require('../../../src/models/sales.Model');
 const salesProductsModels = require('../../../src/models/salesAndProducts.Model');
 const {
   createSale,
@@ -15,7 +15,7 @@ const {
 const {
   allSalesMock,
   salesByIdMock,
-  saleProducts,
+  // saleProducts,
 } = require('../mocks/sales.mock');
 
 describe('Teste de unidade de sales_products.service', function () {
@@ -49,9 +49,11 @@ describe('Teste de unidade de sales_products.service', function () {
   });
 
   describe('Testes relacionados a função POST', function () {
+    afterEach(function () { sinon.restore(); });
+
     // it('Cadastrando venda', async function () {
     //   sinon.stub(productsModels, 'allProducts').resolves(allProductsMock);
-    //   sinon.stub(salesModels, 'createSaleDate').resolves(3);
+    //   sinon.stub(salesModels, 'createSaleDate').resolves();
     //   sinon.stub(salesProductsModels, 'newSalesProduct').resolves();
     //   sinon
     //     .stub(salesProductsModels, 'findByIdAndColumns')
@@ -61,7 +63,7 @@ describe('Teste de unidade de sales_products.service', function () {
 
     //   expect(result.type).to.equal(null);
     //   expect(result.message).to.be.deep.equal({
-    //     id: 3,
+    //     id: 1,
     //     itemsSold: saleProducts,
     //   });
     // });
