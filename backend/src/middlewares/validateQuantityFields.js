@@ -1,4 +1,4 @@
-module.exports = (req, res, next) => {
+const validateQuantity = (req, res, next) => {
   const sales = req.body;
   const validator = sales.every((sale) => Object.keys(sale).includes('quantity'));
   
@@ -7,4 +7,8 @@ module.exports = (req, res, next) => {
   }
   
   return res.status(400).json({ message: '"quantity" is required' });
+};
+
+module.exports = {
+  validateQuantity,
 };
