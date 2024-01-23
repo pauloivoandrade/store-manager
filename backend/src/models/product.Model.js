@@ -24,9 +24,15 @@ const insertDate = async () => {
   return insertId;
 };
 
+const remove = async (id) => {
+  const [deleted] = await connection.execute('DELETE FROM products WHERE id = ?', [id]);
+  return deleted;
+};
+
 module.exports = {
   allProducts,
   productsById,
   addNewProduct,
   insertDate,
+  remove,
 };

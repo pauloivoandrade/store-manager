@@ -10,7 +10,6 @@ route.put(
   '/:id', 
   salesAndProductsController.updateSale,
 );
-
-// route.delete('/:id', salesAndProductsController.removeSale);
+route.delete('/:id', productController.removeProductController);
 
 module.exports = route;

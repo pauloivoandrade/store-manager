@@ -23,9 +23,18 @@ const createSaleDate = async () => {
   const { insertId } = result;
   return insertId;
 };
+const remove = async (id) => {
+  const [result] = await connection.execute(
+    `DELETE FROM StoreManager.sales
+    WHERE id = ?`,
+    [id],
+  );
+  return result;
+};
 
 module.exports = {
   allSales,
   salesById,
   createSaleDate,
+  remove,
 };

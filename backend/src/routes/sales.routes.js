@@ -9,13 +9,5 @@ const { salesAndProductsController } = require('../controllers');
 route.get('/', salesController.allSales);
 route.get('/:id', salesController.salesById);
 route.post('/', validateProduct, validateQuantity, salesAndProductsController.createSale);
-// route.put(
-//   '/:id',
-//   validateProduct,
-//   validateQuantity,
-//   salesAndProductsController.updateSale,
-// );
-
-// route.delete('/:id', salesAndProductsController.removeSale);
 
 module.exports = route;

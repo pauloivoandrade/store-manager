@@ -57,18 +57,9 @@ const updateSale = async (name, id) => {
   return { status: 404, data: { message: 'Product not found' } };
 };
 
-// const removeSale = async (id) => {
-//   const product = await productsModels.(id);
-//   if (product.affectedRows === 0) {
-//     return { status: 404, data: { message: 'Product not found' } };
-//   }
-//   return { status: 204, data: { message: 'Produto excluído com sucesso' } };
-// };
-
 module.exports = {
   createSale,
   findAll,
   findById,
-  // removeSale,
   updateSale,
 };

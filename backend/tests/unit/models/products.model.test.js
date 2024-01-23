@@ -30,11 +30,35 @@ describe('Realizando testes - PRODUCT MODEL:', function () {
   
       const response = await productModel.addNewProduct(product);
   
-      // Ajuste o objeto de resposta esperado para refletir o formato real do retorno
       expect(response).to.be.deep.equal({
         id: 100,
         name: 'Abóbora',
       });
+    });
+  });
+  describe.only('Testando a camada Products Model para na função "PUT"', function () {
+    it('Testando o produto e excluido com sucesso', async function () {
+      const productId = 1;
+      const deletedProduct = {
+        affectedRows: 1,
+      };
+  
+      sinon.stub(connection, 'execute').resolves([deletedProduct]);
+      const response = await productModel.remove(productId);
+  
+      expect(response).to.be.deep.equal(deletedProduct);
+    });
+  
+    it('Testando se o retorno é 0 quando não se encontra um produto para excluir', async function () {
+      const productId = 1;
+      const deletedProduct = {
+        affectedRows: 0,
+      };
+  
+      sinon.stub(connection, 'execute').resolves([deletedProduct]);
+      const response = await productModel.remove(productId);
+  
+      expect(response).to.be.deep.equal(deletedProduct);
     });
   });
   

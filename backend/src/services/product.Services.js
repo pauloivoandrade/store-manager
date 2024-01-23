@@ -21,9 +21,16 @@ const isNewProduct = async (name) => {
   }
   return { status: 201, data: newProduct };
 };
-
+const removeProductService = async (id) => {
+  const product = await productModel.remove(id);
+  if (product.affectedRows === 0) {
+    return { status: 404, data: { message: 'Product not found' } };
+  }
+  return { status: 204, data: { message: 'Produto excluído com sucesso' } };
+};
 module.exports = {
   isProduct,
   isProductId,
   isNewProduct,
+  removeProductService,
 };
