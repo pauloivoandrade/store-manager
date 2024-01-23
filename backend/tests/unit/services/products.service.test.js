@@ -38,7 +38,6 @@ describe('Testa a camada Products Service', function () {
   
       const response = await productsService.isNewProduct(body);
   
-      // Ajuste o objeto de resposta esperado para refletir o formato real do retorno
       expect(response).to.be.deep.equal({ status: 201, data: expected });
     });
   });

@@ -1,5 +1,5 @@
 const validateId = (id) => {
-  if (id === undefined) {
+  if (id.length === 0) {
     const error = {
       code: 'requiredField',
       message: '"product_id" is required',

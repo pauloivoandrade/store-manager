@@ -1,7 +1,7 @@
 const salesAndProducts = require('../models/salesAndProducts.Model');
 const productsModels = require('../models/product.Model');
 const salesModels = require('../models/product.Model');
-const { validations } = require('../middlewares');
+const validations = require('../middlewares/validationsValues');
 
 const findAll = async () => {
   const sales = await salesAndProducts.findAll();
@@ -16,7 +16,7 @@ const findById = async (saleId) => {
 };
 
 const createSale = async (sale) => {
-  const error = validations.validateSales(sale);
+  const error = validations.validateNewSale(sale);
   if (error.type) return error;
   const allProducts = await productsModels.allProducts();
   const productsSales = sale.every(({ productId }) => (
