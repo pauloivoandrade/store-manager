@@ -27,14 +27,16 @@ const validateQuantity = (quantity) => {
   return true;
 };
 
-const validateSales = (req, _res, next) => {
-  const sales = req.body;
-  sales.forEach((sale) => {
-    validateId(sale.product_id);
-    validateQuantity(sale.quantity);
-  });
-  
-  next();
+const validateSales = (sales) => {
+  try {
+    console.log(sales);
+    sales.forEach((sale) => {
+      validateId(sale.product_id);
+      validateQuantity(sale.quantity);
+    });
+  } catch (error) {
+    return { type: error.type, message: error.message };
+  }
 };
 
 module.exports = {

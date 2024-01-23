@@ -1,6 +1,5 @@
 const express = require('express');
 const { productsRoutes, salesRoutes } = require('./routes');
-const connection = require('./models/connection');
 
 const app = express();
 
@@ -8,6 +7,7 @@ app.use(express.json());
 
 app.use('/products', productsRoutes);
 
+app.use('/sales', salesRoutes);
 // app.get('/products', async (_req, res) => {
 //   const [products] = await connection.execute('SELECT * FROM products');
 //   res.status(200).json(products);
@@ -19,7 +19,6 @@ app.use('/products', productsRoutes);
 //   if (!products) return res.status(404).json({ message: 'Product not found' });
 //   res.status(200).json(products);
 // });
-app.use('/sales', salesRoutes);
 // app.get('/sales', async (_req, res) => {
 //   const [sales] = await connection.execute(
 //     `SELECT sale_id AS saleId, a.date, product_id AS productId, quantity
@@ -41,15 +40,6 @@ app.use('/sales', salesRoutes);
 
 //   res.status(200).json(sales);
 // });
-app.post('/sales', async (req, res) => {
-  const { saleId, productId, quantity } = req.body;
-  const [{ insertId }] = await connection.execute(
-    `INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity)
-    VALUES (?, ?, ?);`,
-    [saleId, productId, quantity],
-  );
-  return res.status(201).json(insertId);
-});
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
   response.json({ status: 'Store Manager UP!' });
