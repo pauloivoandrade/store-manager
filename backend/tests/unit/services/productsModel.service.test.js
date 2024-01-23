@@ -2,7 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 
 const productsModels = require('../../../src/models/product.Model');
-const saleProductsService = require('../../../src/services/salesAndProducts.Services')
+const saleProductsService = require('../../../src/services/salesAndProducts.Services');
 // const salesModels = require('../../../src/models/sales.Model');
 const salesProductsModels = require('../../../src/models/salesAndProducts.Model');
 const {
