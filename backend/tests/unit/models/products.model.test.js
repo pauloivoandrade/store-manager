@@ -36,7 +36,7 @@ describe('Realizando testes - PRODUCT MODEL:', function () {
       });
     });
   });
-  describe.only('Testando a camada Products Model para na função "PUT"', function () {
+  describe('Testando a camada Products Model para na função "DELETE"', function () {
     it('Testando o produto e excluido com sucesso', async function () {
       const productId = 1;
       const deletedProduct = {
