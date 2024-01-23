@@ -13,16 +13,31 @@ const allProductsMock = [
   },
 ];
 
+const updateResult = {
+  fieldCount: 0,
+  affectedRows: 1,
+  insertId: 0,
+  info: 'Rows matched: 1  Changed: 0  Warnings: 0',
+  serverStatus: 2,
+  warningStatus: 0,
+  changedRows: 0,
+};
 const productsByIdMock = [
   {
-    id: 2,
     name: 'Traje de encolhimento',
+    id: 2,
   },
 ];
-
+const newProductWithId = {
+  name: 'playstation 2',
+  id: 4,
+};
+const newProduct = {
+  name: 'playstation 2',
+};
 const newProductMock = {
-  id: 1,
   name: 'ProdutoX',
+  id: 1,
 };
 const emptyProduct = {};
 
@@ -31,4 +46,7 @@ module.exports = {
   productsByIdMock,
   newProductMock,
   emptyProduct,
+  updateResult,
+  newProductWithId,
+  newProduct,
 };

@@ -6,6 +6,7 @@ const { expect } = chai;
 chai.use(sinonChai);
 
 const salesProductsService = require('../../../src/services/salesAndProducts.Services');
+const salesProductsController = require('../../../src/controllers/salesAndProducts.Controller');
 const {
   createSale,
   listAllSales,
@@ -161,6 +162,29 @@ describe('Teste de unidade de sales_products.models', function () {
       expect(res.json).to.have.been.calledWith({
         message: 'Product not found',
       });
+    });
+  });
+  describe('Testa a camada Sales Products Controller para a função "updateSale"', function () {
+    it('Faz a atualização de um produto', async function () {
+      const req = {
+        params: {
+          id: 100,
+        },
+        body: { name: 'batman' },
+      };
+      const res = {};
+      const dataService = { name: 'batman', id: 100 };
+      const responseService = { status: 200, data: dataService };
+
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+
+      sinon.stub(salesProductsService, 'updateSale').resolves(responseService);
+
+      await salesProductsController.updateSale(req, res);
+
+      expect(res.status).to.have.been.calledWith(200);
+      expect(res.json).to.have.been.calledWith(dataService);
     });
   });
 });

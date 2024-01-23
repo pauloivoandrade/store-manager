@@ -2,6 +2,7 @@ const salesAndProducts = require('../models/salesAndProducts.Model');
 const productsModels = require('../models/product.Model');
 const salesModels = require('../models/product.Model');
 const validations = require('../middlewares/validationsValues');
+const { validateProductNameField } = require('../middlewares/validateNameUpdate');
 
 const findAll = async () => {
   const sales = await salesAndProducts.findAll();
@@ -37,8 +38,37 @@ const createSale = async (sale) => {
     message: { id: currentDateId, itemsSold: newSale } };
 };
 
+const updateSale = async (name, id) => {
+  const { status, message } = validateProductNameField(name);
+
+  if (!id) {
+    return { status: 404, data: { message: 'Product not found' } };
+  }
+
+  if (status !== 201) {
+    return { status, data: { message } };
+  }
+
+  const product = await salesAndProducts.updateSale(name, id);
+
+  if (product) {
+    return { status: 200, data: product };
+  } 
+  return { status: 404, data: { message: 'Product not found' } };
+};
+
+// const removeSale = async (id) => {
+//   const product = await productsModels.(id);
+//   if (product.affectedRows === 0) {
+//     return { status: 404, data: { message: 'Product not found' } };
+//   }
+//   return { status: 204, data: { message: 'Produto excluído com sucesso' } };
+// };
+
 module.exports = {
   createSale,
   findAll,
   findById,
+  // removeSale,
+  updateSale,
 };
