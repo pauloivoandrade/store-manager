@@ -1,6 +1,6 @@
 const salesAndProducts = require('../models/salesAndProducts.Model');
 const productsModels = require('../models/product.Model');
-const salesModels = require('../models/product.Model');
+const productModels = require('../models/product.Model');
 const validations = require('../middlewares/validationsValues');
 const { validateProductNameField } = require('../middlewares/validateNameUpdate');
 
@@ -25,7 +25,7 @@ const createSale = async (sale) => {
   ));
   if (!productsSales) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   
-  const currentDateId = await salesModels.insertDate();
+  const currentDateId = await productModels.insertDate();
   await Promise.all(sale.map(({ productId, quantity }) => (
     salesAndProducts.newSalesProduct(productId, quantity, currentDateId)
   )));

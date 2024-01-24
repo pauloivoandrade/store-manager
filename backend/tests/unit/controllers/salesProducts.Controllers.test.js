@@ -13,6 +13,8 @@ const {
   listSalesById,
 } = require('../../../src/controllers/salesAndProducts.Controller');
 const { saleProducts, allSalesMock, salesByIdMock } = require('../mocks/sales.mock');
+const { productsService } = require('../../../src/services');
+const productsController = require('../../../src/controllers/product.Controller');
 
 describe('Teste de unidade de sales_products.models', function () {
   afterEach(sinon.restore);
@@ -133,6 +135,22 @@ describe('Teste de unidade de sales_products.models', function () {
         message: '"quantity" must be greater than or equal to 1',
       });
     });
+    it('Testando se a aplicação retorna um erro quando busca um produto que não existe', async function () {
+      const req = { params: { id: 6 } };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+  
+      const errorResult = { status: 404, data: { message: 'Product not found' } };
+      sinon.stub(productsService, 'isProductId').resolves(errorResult);
+  
+      await productsController.productsById(req, res);
+  
+      sinon.assert.calledWith(res.status, 404);
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledOnce(productsService.isProductId);
+    });
 
     it('Retorno caso a productId for inexistente', async function () {
       const res = {};
@@ -185,6 +203,48 @@ describe('Teste de unidade de sales_products.models', function () {
 
       expect(res.status).to.have.been.calledWith(200);
       expect(res.json).to.have.been.calledWith(dataService);
+    });
+  });
+  describe('Testa a camada Products Controller para a função "DELETE"', function () {
+    it('Testando se a aplicação retorna todos os produtos', async function () {
+      const req = {};
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+      
+      const findAllProducts = { status: 200, data: [{ id: 1, name: 'teste' }] };
+      sinon.stub(productsService, 'isProduct').resolves(findAllProducts);
+      await productsController.allProducts(req, res);
+      sinon.assert.calledWith(res.status, 200);
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledOnce(productsService.isProduct);
+    });
+    it('Exclui um produto com sucesso', async function () {
+      const req = { params: { id: 1 } };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+      const deleteResult = { status: 204, data: { message: 'Produto excluído com sucesso' } };
+      sinon.stub(productsService, 'removeProductService').resolves(deleteResult);
+      await productsController.removeProductController(req, res);
+      sinon.assert.calledWith(res.status, 204);
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledOnce(productsService.removeProductService);
+    });
+    it('Retorna um erro ao tentar excluir um produto inexistente', async function () {
+      const req = { params: { id: 1 } };
+      const res = {
+        status: sinon.stub().returnsThis(),
+        json: sinon.stub(),
+      };
+      const errorResult = { status: 404, data: { message: 'Product not found' } };
+      sinon.stub(productsService, 'removeProductService').resolves(errorResult);
+      await productsController.removeProductController(req, res);
+      sinon.assert.calledWith(res.status, 404);
+      sinon.assert.calledOnce(res.json);
+      sinon.assert.calledOnce(productsService.removeProductService);
     });
   });
 });

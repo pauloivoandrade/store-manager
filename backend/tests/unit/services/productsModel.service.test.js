@@ -3,7 +3,6 @@ const sinon = require('sinon');
 
 const productsModels = require('../../../src/models/product.Model');
 const saleProductsService = require('../../../src/services/salesAndProducts.Services');
-// const salesModels = require('../../../src/models/sales.Model');
 const salesProductsModels = require('../../../src/models/salesAndProducts.Model');
 const {
   createSale,
@@ -18,7 +17,7 @@ const {
 const {
   allSalesMock,
   salesByIdMock,
-  // saleProducts,
+  saleProducts,
 } = require('../mocks/sales.mock');
 
 describe('Teste de unidade de sales_products.service', function () {
@@ -54,22 +53,23 @@ describe('Teste de unidade de sales_products.service', function () {
   describe('Testes relacionados a função POST', function () {
     afterEach(function () { sinon.restore(); });
 
-    // it('Cadastrando venda', async function () {
-    //   sinon.stub(productsModels, 'allProducts').resolves(allProductsMock);
-    //   sinon.stub(salesModels, 'createSaleDate').resolves();
-    //   sinon.stub(salesProductsModels, 'newSalesProduct').resolves();
-    //   sinon
-    //     .stub(salesProductsModels, 'findByIdAndColumns')
-    //     .resolves(saleProducts);
+    it('Cadastrando venda', async function () {
+      sinon.stub(productsModels, 'allProducts').resolves(allProductsMock);
+      // sinon.stub(salesModels, 'createSaleDate').resolves();
+      sinon.stub(productsModels, 'insertDate').resolves(1);
+      sinon.stub(salesProductsModels, 'newSalesProduct').resolves();
+      sinon
+        .stub(salesProductsModels, 'findByIdAndColumns')
+        .resolves(saleProducts);
 
-    //   const result = await createSale(saleProducts);
+      const result = await createSale(saleProducts);
 
-    //   expect(result.type).to.equal(null);
-    //   expect(result.message).to.be.deep.equal({
-    //     id: 1,
-    //     itemsSold: saleProducts,
-    //   });
-    // });
+      expect(result.type).to.equal(null);
+      expect(result.message).to.be.deep.equal({
+        id: 1,
+        itemsSold: saleProducts,
+      });
+    });
 
     it('Retorno caso a quantidade for zero', async function () {
       const result = await createSale([

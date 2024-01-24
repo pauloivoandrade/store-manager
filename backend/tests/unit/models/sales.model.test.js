@@ -5,6 +5,21 @@ const { salesModel } = require('../../../src/models');
 const { allSalesMock, salesByIdMock } = require('../mocks/sales.mock');
 
 describe('Realizando testes - SALES MODEL:', function () {
+  it('Teste se a requisição de todas as vendas', async function () {
+    sinon.stub(connection, 'execute').resolves([allSalesMock]);
+    const response = await salesModel.allSales();
+    expect(response).to.be.deep.equal(allSalesMock);
+  });
+  // it('Teste se a criação de uma venda é feita com sucesso', async function () {
+  //   sinon.stub(connection, 'execute').resolves([{ insertId: 1 }], []);
+  //   const saleData = [
+  //     { productId: 1, quantity: 2 },
+  //     { productId: 2, quantity: 3 },
+  //   ];
+  //   const response = await salesModel.createSaleDate(saleData);
+
+  //   expect(response).to.be.deep.equal({ id: 1, itemsSold: saleData });
+  // });
   it('Buscando sale por id com sucesso', async function () {
     sinon.stub(connection, 'execute').resolves([[salesByIdMock]]);
       
@@ -24,6 +39,13 @@ describe('Realizando testes - SALES MODEL:', function () {
     expect(sale).to.be.an('array');
     expect(sale).to.be.deep.equal(allSalesMock);
   });
+
+  it('Testa criacao de uma nova sale', async function () {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 3 }]);
+    const result = await salesModel.createSaleDate();
+    expect(result).to.equal(3);
+  });
+  
   afterEach(function () {
     sinon.restore();
   });

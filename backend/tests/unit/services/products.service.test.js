@@ -3,14 +3,21 @@ const chai = require('chai');
 const { expect } = chai;
 const sinon = require('sinon');
 
-const { productModel } = require('../../../src/models');
-const { productsByIdMock } = require('../mocks/products.mock');
+const { productModel, salesProductModel } = require('../../../src/models');
+const { productsByIdMock, allProductsMock } = require('../mocks/products.mock');
 const { productsService } = require('../../../src/services');
+const salesAndProductService = require('../../../src/services/salesAndProducts.Services');
 
 describe('Testa a camada Products Service', function () {
   afterEach(function () { sinon.restore(); });
 
   describe('Teste - camada Products Service pelo Id', function () {
+    it('Testando se a aplicação retorna todos os produtos', async function () {
+      sinon.stub(productModel, 'allProducts').resolves(allProductsMock);
+  
+      const response = await productsService.isProduct();
+      expect(response.data).to.be.deep.equal(allProductsMock);
+    });
     it('Busca produto por um Id inexistente', async function () {
       const expected = { status: 404, data: { message: 'Product not found' } };
       
@@ -39,6 +46,14 @@ describe('Testa a camada Products Service', function () {
       const response = await productsService.isNewProduct(body);
   
       expect(response).to.be.deep.equal({ status: 201, data: expected });
+    });
+    it('Testando a atualização de um produto', async function () {
+      const updateResult = { id: 1, name: 'updatedName' };
+      sinon.stub(salesProductModel, 'updateSale').resolves(updateResult);
+  
+      const response = await salesAndProductService.updateSale('updatedName', 1);
+      expect(response.status).to.be.equal(200);
+      expect(response.data).to.be.deep.equal(updateResult);
     });
   });
   describe('Testa camada Products Service para deletar um produtos', function () {
