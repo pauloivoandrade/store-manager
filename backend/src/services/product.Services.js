@@ -1,6 +1,6 @@
 const { productModel } = require('../models');
 
-const isProduct = async () => {
+const allProducts = async () => {
   const products = await productModel.allProducts();
   return { status: 200, data: products };
 };
@@ -29,7 +29,7 @@ const removeProductService = async (id) => {
   return { status: 204, data: { message: 'Produto excluído com sucesso' } };
 };
 module.exports = {
-  isProduct,
+  allProducts,
   isProductId,
   isNewProduct,
   removeProductService,
